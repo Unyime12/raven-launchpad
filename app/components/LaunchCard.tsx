@@ -296,7 +296,7 @@ export default function LaunchCard({
                 ? "bg-zinc-800/50 text-zinc-500 border border-zinc-700/50"
                 : isLive
                 ? "bg-violet-500/10 text-violet-400 border border-violet-500/20"
-                : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                : "bg-zinc-500/10 text-zinc-400 border border-zinc-500/20"
             }`}
         >
           {chain?.state === 0
