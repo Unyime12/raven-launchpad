@@ -22,7 +22,7 @@ export default function RootLayout({
           <div className="min-h-screen flex flex-col">
             {/* Header */}
             <header className="sticky top-0 z-50 bg-[#232328] backdrop-blur-xl border-b border-zinc-800/50">
-              <div className="mx-6 flex items-center justify-between px-2 py-4">
+              <div className="mx-5 flex items-center justify-between py-4">
                 {/* Logo */}
                 <div className="flex items-center gap-3">
   {/* Logo image */}

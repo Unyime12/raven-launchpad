@@ -234,3 +234,63 @@ impl Launchpad {
         events::pool_created(env, token, funding_token, funded);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use soroban_sdk::{testutils::{Address as _, Ledger}, Env, Address};
+
+    fn create_launchpad(env: &Env) -> (LaunchpadClient, Address, Address) {
+        let contract_id = env.register_contract(None, Launchpad);
+        let client = LaunchpadClient::new(env, &contract_id);
+        let token = Address::generate(env);
+        let funding_token = Address::generate(env);
+
+        env.ledger().with_mut(|l| l.timestamp = 1000);
+        client.initialize(&token, &funding_token, &100_000i128, &9000u64);
+
+        (client, token, funding_token)
+    }
+
+    #[test]
+    fn test_initial_state_is_running() {
+        let env = Env::default();
+        env.mock_all_auths();
+        let (client, _, _) = create_launchpad(&env);
+        assert_eq!(client.get_state(), 0u32);
+    }
+
+    #[test]
+    fn test_get_target_returns_correct_value() {
+        let env = Env::default();
+        env.mock_all_auths();
+        let (client, _, _) = create_launchpad(&env);
+        assert_eq!(client.get_target(), 100_000i128);
+    }
+
+    #[test]
+    fn test_funded_starts_at_zero() {
+        let env = Env::default();
+        env.mock_all_auths();
+        let (client, _, _) = create_launchpad(&env);
+        assert_eq!(client.get_funded(), 0i128);
+    }
+
+    #[test]
+    fn test_buyer_balance_starts_at_zero() {
+        let env = Env::default();
+        env.mock_all_auths();
+        let (client, _, _) = create_launchpad(&env);
+        let buyer = Address::generate(&env);
+        assert_eq!(client.get_buyer_balance(&buyer), 0i128);
+    }
+
+    #[test]
+    fn test_state_expires_after_deadline() {
+        let env = Env::default();
+        env.mock_all_auths();
+        let (client, _, _) = create_launchpad(&env);
+        env.ledger().with_mut(|l| l.timestamp = 9001);
+        assert_eq!(client.get_state(), 2u32);
+    }
+}
