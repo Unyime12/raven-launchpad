@@ -57,7 +57,7 @@ const STATUS_CFG: Record<
 > = {
   0: {
     label: "LIVE",
-    badge: "text-violet-400 border-violet-500/30 bg-violet-500/10",
+    badge: "text-violet-400/50 border-violet-500/30 bg-violet-500/10",
     heading: "Sale Live",
   },
   1: {

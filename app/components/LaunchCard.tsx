@@ -310,7 +310,7 @@ export default function LaunchCard({
         <Link
           href={`/launch/${launch.id}`}
           className="flex-1 py-2.5 rounded-xl text-center text-xs font-black tracking-wider
-                     bg-violet-600 hover:bg-violet-500 text-white transition-colors
+                     bg-white hover:bg-white/55 text-black transition-colors
                      flex items-center justify-center gap-1.5"
         >
           View <ExternalLink size={11} />

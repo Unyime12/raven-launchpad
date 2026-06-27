@@ -41,7 +41,7 @@ export default function LaunchFilters({
   return (
     <div className="max-w-5xl mx-auto px-4 pb-6 space-y-4">
       {/* Tab pills + count */}
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex items-center mt-4 gap-2 flex-wrap">
         {STATUS_OPTIONS.map((opt) => (
           <button
             key={opt.value}
