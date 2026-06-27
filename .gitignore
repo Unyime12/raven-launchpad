@@ -1,0 +1,49 @@
+
+cat << 'EOF' > .gitignore
+# Node.js / Next.js
+node_modules
+.next
+out
+.env*.local
+
+# Rust / Soroban
+target/
+Cargo.lock
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode
+.idea
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+EOF
+
+# Rust build artifacts
+/target/
+/Cargo.lock          # ← usually safe to ignore in libraries/apps (decide per project)
+
+/# IDE / editor files
+.idea/
+.vscode/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# Logs and temp files
+*.log
+.DS_Store
+Thumbs.db
+
+# Soroban / Stellar specific
+*.wasm
+*.wasm.map
+*.d
+soroban-*.json
+
+# Test outputs, coverage, etc.
+coverage/
+lcov.info
