@@ -1,15 +1,15 @@
 import * as StellarSdk from '@stellar/stellar-sdk';
-import { 
-  StellarWalletsKit, 
-  WalletNetwork, 
+import {
+  StellarWalletsKit,
+  WalletNetwork,
   allowAllModules,
-  FREIGHTER_ID 
+  FREIGHTER_ID,
 } from '@creit.tech/stellar-wallets-kit';
 
 export class StellarHelper {
   private server: StellarSdk.Horizon.Server;
   private networkPassphrase: string;
-  private kit: StellarWalletsKit;
+  private kit: StellarWalletsKit | null = null;
   private network: WalletNetwork;
   private publicKey: string | null = null;
 
@@ -23,17 +23,25 @@ export class StellarHelper {
       network === 'testnet'
         ? StellarSdk.Networks.TESTNET
         : StellarSdk.Networks.PUBLIC;
-    
-    this.network = network === 'testnet' 
-      ? WalletNetwork.TESTNET 
-      : WalletNetwork.PUBLIC;
 
-    // Stellar Wallets Kit'i initialize et
-    this.kit = new StellarWalletsKit({
-      network: this.network,
-      selectedWalletId: FREIGHTER_ID,
-      modules: allowAllModules(),
-    });
+    this.network =
+      network === 'testnet' ? WalletNetwork.TESTNET : WalletNetwork.PUBLIC;
+
+    // Only instantiate in the browser — StellarWalletsKit accesses `window`
+    if (typeof window !== 'undefined') {
+      this.kit = new StellarWalletsKit({
+        network: this.network,
+        selectedWalletId: FREIGHTER_ID,
+        modules: allowAllModules(),
+      });
+    }
+  }
+
+  private getKit(): StellarWalletsKit {
+    if (!this.kit) {
+      throw new Error('StellarWalletsKit is only available in the browser.');
+    }
+    return this.kit;
   }
 
   isFreighterInstalled(): boolean {
@@ -42,26 +50,25 @@ export class StellarHelper {
 
   async connectWallet(): Promise<string> {
     try {
-      // Wallet modal'ı aç ve wallet seçildiğinde adresi al
-      await this.kit.openModal({
+      const kit = this.getKit();
+      await kit.openModal({
         onWalletSelected: async (option) => {
           console.log('Wallet selected:', option.id);
-          this.kit.setWallet(option.id);
-        }
+          kit.setWallet(option.id);
+        },
       });
 
-      // Seçilen wallet'ın adresini al
-      const { address } = await this.kit.getAddress();
+      const { address } = await kit.getAddress();
 
       if (!address) {
-        throw new Error('Wallet bağlanamadı');
+        throw new Error('Could not retrieve wallet address');
       }
 
       this.publicKey = address;
       return address;
     } catch (error: any) {
       console.error('Wallet connection error:', error);
-      throw new Error('Wallet bağlantısı başarısız: ' + error.message);
+      throw new Error('Wallet connection failed: ' + error.message);
     }
   }
 
@@ -70,7 +77,7 @@ export class StellarHelper {
     assets: Array<{ code: string; issuer: string; balance: string }>;
   }> {
     const account = await this.server.loadAccount(publicKey);
-    
+
     const xlmBalance = account.balances.find(
       (b) => b.asset_type === 'native'
     );
@@ -95,6 +102,7 @@ export class StellarHelper {
     amount: string;
     memo?: string;
   }): Promise<{ hash: string; success: boolean }> {
+    const kit = this.getKit();
     const account = await this.server.loadAccount(params.from);
 
     const transactionBuilder = new StellarSdk.TransactionBuilder(account, {
@@ -114,8 +122,7 @@ export class StellarHelper {
 
     const transaction = transactionBuilder.setTimeout(180).build();
 
-    // Wallet Kit ile imzala
-    const { signedTxXdr } = await this.kit.signTransaction(transaction.toXDR(), {
+    const { signedTxXdr } = await kit.signTransaction(transaction.toXDR(), {
       networkPassphrase: this.networkPassphrase,
     });
 
@@ -137,16 +144,18 @@ export class StellarHelper {
   async getRecentTransactions(
     publicKey: string,
     limit: number = 10
-  ): Promise<Array<{
-    id: string;
-    type: string;
-    amount?: string;
-    asset?: string;
-    from?: string;
-    to?: string;
-    createdAt: string;
-    hash: string;
-  }>> {
+  ): Promise<
+    Array<{
+      id: string;
+      type: string;
+      amount?: string;
+      asset?: string;
+      from?: string;
+      to?: string;
+      createdAt: string;
+      hash: string;
+    }>
+  > {
     const payments = await this.server
       .payments()
       .forAccount(publicKey)
@@ -166,15 +175,23 @@ export class StellarHelper {
     }));
   }
 
-  getExplorerLink(hash: string, type: 'tx' | 'account' = 'tx'): string {
-    const network = this.networkPassphrase === StellarSdk.Networks.TESTNET ? 'testnet' : 'public';
+  getExplorerLink(
+    hash: string,
+    type: 'tx' | 'account' = 'tx'
+  ): string {
+    const network =
+      this.networkPassphrase === StellarSdk.Networks.TESTNET
+        ? 'testnet'
+        : 'public';
     return `https://stellar.expert/explorer/${network}/${type}/${hash}`;
   }
 
-  formatAddress(address: string, startChars: number = 4, endChars: number = 4): string {
-    if (address.length <= startChars + endChars) {
-      return address;
-    }
+  formatAddress(
+    address: string,
+    startChars: number = 4,
+    endChars: number = 4
+  ): string {
+    if (address.length <= startChars + endChars) return address;
     return `${address.slice(0, startChars)}...${address.slice(-endChars)}`;
   }
 
@@ -184,4 +201,6 @@ export class StellarHelper {
   }
 }
 
-export const stellar = new StellarHelper('testnet');
+// Only instantiate in the browser — never at SSR/module-eval time
+export const stellar: StellarHelper | null =
+  typeof window !== 'undefined' ? new StellarHelper('testnet') : null;

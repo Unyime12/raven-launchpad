@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { WalletProvider } from "./contexts/WalletContext";
 import WalletConnection from "./components/WalletConnection";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
-  title: "STELLAR LAUNCHPAD",
-  description: "Decentralized token launchpad on Stellar Soroban",
+  title: "RAVEN LAUNCHPAD",
+  description: "token launchpad on Stellar Soroban",
 };
 
 export default function RootLayout({
@@ -17,13 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Analytics />
-      <body className="antialiased bg-[#040407]">
+      <body className="antialiased bg-[#0a0a0f]">
         <WalletProvider>
           <div className="min-h-screen flex flex-col">
             {/* Header */}
-            <header className="sticky top-0 z-50 bg-[#040407]/80 backdrop-blur-xl border-b border-zinc-800/50">
-              <div className="max-w-2xl mx-auto flex items-center justify-between px-4 py-4">
-
+            <header className="sticky top-0 z-50 bg-[#232328] backdrop-blur-xl border-b border-zinc-800/50">
+              <div className="  mx-2 flex items-center justify-between px-2 py-4">
                 {/* Logo */}
                 <div className="flex items-center gap-3">
                   <div className="relative h-10 w-10 flex items-center justify-center bg-zinc-900 rounded-xl border border-zinc-800">
@@ -59,7 +58,13 @@ export default function RootLayout({
                         opacity="0.6"
                       />
                       <defs>
-                        <linearGradient id="launch-gradient" x1="7" y1="2" x2="17" y2="20">
+                        <linearGradient
+                          id="launch-gradient"
+                          x1="7"
+                          y1="2"
+                          x2="17"
+                          y2="20"
+                        >
                           <stop stopColor="#10b981" />
                           <stop offset="1" stopColor="#064e3b" />
                         </linearGradient>
@@ -69,10 +74,7 @@ export default function RootLayout({
 
                   <div className="flex flex-col -space-y-0.5">
                     <span className="font-black tracking-tighter text-white text-lg font-mono">
-                      LAUNCH<span className="text-emerald-400">PAD</span>
-                    </span>
-                    <span className="text-[8px] font-bold text-zinc-600 uppercase tracking-[0.3em]">
-                      Stellar · Soroban
+                      RAVEN<span className="text-violet-400">PAD</span>
                     </span>
                   </div>
                 </div>
@@ -82,9 +84,6 @@ export default function RootLayout({
                   {/* Testnet badge */}
                   <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900/50">
                     <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
-                      Testnet
-                    </span>
                   </div>
                   <WalletConnection />
                 </div>

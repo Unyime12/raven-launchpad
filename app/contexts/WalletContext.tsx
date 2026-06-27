@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode, useMemo } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import {
   StellarWalletsKit,
   WalletNetwork,
@@ -12,23 +18,22 @@ import {
 interface WalletContextType {
   address: string | null;
   setAddress: (addr: string | null) => void;
-  walletsKit: StellarWalletsKit;
+  walletsKit: StellarWalletsKit | null;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [address, setAddress] = useState<string | null>(null);
+  const [walletsKit, setWalletsKit] = useState<StellarWalletsKit | null>(null);
 
-  const walletsKit = useMemo(
-    () =>
-      new StellarWalletsKit({
-        network: WalletNetwork.TESTNET,
-
-        modules: [new FreighterModule(), new AlbedoModule(), new xBullModule()],
-      }),
-    []
-  );
+  useEffect(() => {
+    const kit = new StellarWalletsKit({
+      network: WalletNetwork.TESTNET,
+      modules: [new FreighterModule(), new AlbedoModule(), new xBullModule()],
+    });
+    setWalletsKit(kit);
+  }, []);
 
   return (
     <WalletContext.Provider value={{ address, setAddress, walletsKit }}>
@@ -40,7 +45,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 export function useWallet() {
   const context = useContext(WalletContext);
   if (!context) {
-    throw new Error('useWallet must be used within a WalletProvider');
+    throw new Error("useWallet must be used within a WalletProvider");
   }
   return context;
 }
