@@ -226,10 +226,10 @@ export default function LaunchCard({
           <div className="h-7 w-28 rounded bg-zinc-800 animate-pulse" />
         ) : (
           <>
-            <p className="text-violet-400 text-xl font-black tabular-nums">
-              {targetXlm}{" "}
-              <span className="text-sm font-bold text-zinc-500">XLM</span>
-            </p>
+         <p className="text-violet-400 text-xl font-black tabular-nums">
+  {Number.isInteger(targetXlm) ? targetXlm : parseFloat(targetXlm).toFixed(2)}{" "}
+  <span className="text-sm font-bold text-zinc-500">XLM</span>
+</p>
             <p className="text-[10px] text-zinc-600 uppercase tracking-widest mt-0.5">
               Soft Cap
             </p>

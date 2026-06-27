@@ -1,61 +1,72 @@
-# 🐦 Raven Launchpad
+# Raven Launchpad
 
-A decentralized token launchpad (IDO) built on Stellar/Soroban. Contributors fund a raise using native XLM. If the target is hit before the deadline, the launch succeeds and contributors claim project tokens. If not, everyone gets a full refund.
+A multi-token launchpad (IDO) built on Stellar/Soroban. Contributors fund raises using native XLM. If the target is hit before the deadline, the launch succeeds and contributors claim project tokens. If not, everyone gets a full refund.
 
 ## Live Demo
 
 > [https://raven-launchpad.vercel.app](https://raven-launchpad.vercel.app)
+
+> 🎥 Demo Video: [Coming Soon](#)
 
 ---
 
 ## Screenshots
 
 ### Mobile Responsive UI
-> ![Mobile Responsive View](app/screenshots/mobile-responsive.png)
+![Mobile Responsive View](screenshots/mobile-responsive.png)
 
 ### CI/CD Pipeline
 ![CI](https://github.com/youthisguy/s_token_launchpad/actions/workflows/ci.yml/badge.svg)
+![CI Screenshot](screenshots/ci-cd.png)
 
-> ![CI Screenshot](app/screenshots/CI_CD.png)
+### Test Output
+![Test Output](screenshots/test-output.png)
 
 ---
 
 ## How It Works
 
-Sparrow Launchpad uses a simple raise-or-refund model:
+Raven Launchpad uses a simple raise-or-refund model across multiple simultaneous token launches:
 
 1. A project sets a funding target and deadline in XLM
 2. Contributors send XLM via `buy()` — contributions are tracked on-chain
 3. If the target is reached before the deadline → state flips to **Success**; contributors call `claim()` to receive project tokens 1:1
 4. If the deadline passes without hitting the target → state flips to **Expired**; contributors call `refund()` to get their XLM back
 
+Each launch is an independent pair of Token + Launchpad contracts, registered in the frontend registry.
+
 ---
 
 ## Architecture
 
-Two Soroban smart contracts power the protocol, with a Next.js frontend on top.
-
-```
+Two Soroban smart contracts power each launch, with a Next.js frontend on top.
 .
+
 ├── contracts/
+
 │   ├── launchpad/        # Core IDO logic — buy, claim, refund, state machine
+
 │   └── token/            # Project token — mint, transfer, balance, allowance
+
 └── app/                  # Next.js 14 frontend
-```
+
+└── lib/
+
+└── launches.ts   # Multi-launch registry — add new projects here
 
 ### Contract Flow
 
-```
-1. Deploy token contract
-2. Deploy launchpad contract
-3. Initialize token  →  admin = launchpad contract address
-4. Initialize launchpad  →  token, funding_token, target, deadline
-5. Users call buy()  →  XLM transferred to launchpad, contribution tracked
-6. If funded >= target  →  state flips to Success automatically
-7. Users call claim()  →  launchpad mints project tokens 1:1 to contributor
-8. If deadline passes without hitting target  →  state = Expired
-9. Users call refund()  →  XLM returned to contributor
-```
+Deploy token contract
+Deploy launchpad contract
+Initialize token  →  admin = launchpad contract address
+Initialize launchpad  →  token, funding_token, target, deadline
+Register both contract IDs in lib/launches.ts
+Users call buy()  →  XLM transferred to launchpad, contribution tracked
+If funded >= target  →  state flips to Success automatically
+Users call claim()  →  launchpad mints project tokens 1:1 to contributor
+If deadline passes without hitting target  →  state = Expired
+Users call refund()  →  XLM returned to contributor
+
 
 ### Inter-Contract Communication
 
@@ -80,31 +91,33 @@ This eliminates the need for users to sign a separate mint approval — the laun
 ---
 
 ## State Machine
+                ┌─────────┐
+                │ Running │  timestamp < deadline && funded < target
+                └────┬────┘
+                     │ funded >= target
+                     ▼
+                ┌─────────┐
+                │ Success │  claim() available
+                └─────────┘
 
-```
-                    ┌─────────┐
-                    │ Running │  timestamp < deadline && funded < target
-                    └────┬────┘
-                         │ funded >= target
-                         ▼
-                    ┌─────────┐
-                    │ Success │  claim() available
-                    └─────────┘
-
-                    ┌─────────┐
-                    │ Expired │  timestamp >= deadline && funded < target
-                    └─────────┘  refund() available
-```
+                ┌─────────┐
+                │ Expired │  timestamp >= deadline && funded < target
+                └─────────┘  refund() available
 
 ---
 
-## Contract Addresses (Testnet)
+## Live Launches (Testnet)
 
-| Contract | Address |
-|---|---|
-| Token | `CB5VGFF6XPOYTN6SEQ5OE3DQBDYGULNECDYMK3CTOR4DL5NIVIEWRPVR` |
-| Launchpad | `CCHUVB7C4VB4QT7XCFOQFAJI4GTJNZTZE37GQY5H3UK53EYISSEVWUKH` |
-| Funding Token (XLM SAC) | `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` |
+| Launch | Token | Token Contract | Launchpad Contract | Soft Cap |
+|---|---|---|---|---|
+| RAVEN | RVN | `CAKYJF4FRQMF3VS43THFNXB3RWCOHOXUEQE6JRCTEBRRLBD2I5CR23PB` | `CCHUVB7C4VB4QT7XCFOQFAJI4GTJNZTZE37GQY5H3UK53EYISSEVWUKH` | 1,000 XLM |
+| NORMIES | NORM | `CACCNZESK5YAQYYN5NLZLBEJNNPTTNN3H5YK6ICWXEL65UVLGVHNP534` | `CDWEL3QFJ52UNTZFQVM3O424VYC63STQPI7OIMNQ6G2DA5CCFJM5X4JT` | 50,000 XLM |
+| CHIPS | CHIPS | TBD | TBD | 1,000 XLM |
+| GOAT | GOAT | TBD | TBD | 5,000 XLM |
+| PEPE | PEPE | TBD | TBD | 2,000 XLM |
+| ROCKET | RKT | TBD | TBD | 10,000 XLM |
+
+**Funding Token (XLM SAC):** `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
 
 ---
 
@@ -117,6 +130,61 @@ This eliminates the need for users to sign a separate mint approval — the laun
 | **Transaction** | `fadc55b6446caddb9aaf53fb0ca81fb0e83dac9be7dc9bf3c0c6978d1027d84f` |
 | **Explorer** | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/fadc55b6446caddb9aaf53fb0ca81fb0e83dac9be7dc9bf3c0c6978d1027d84f) |
 | **Action** | Launchpad calls `token.mint()` via `authorize_as_current_contract` |
+
+---
+
+## Adding a New Launch
+
+Each new project requires deploying a fresh Token + Launchpad pair. The wasm is already uploaded to testnet so you only need to deploy new instances:
+
+```bash
+# 1. Deploy new token instance from existing wasm hash
+stellar contract deploy \
+  --wasm-hash <TOKEN_WASM_HASH> \
+  --source deployer \
+  --network testnet
+export TOKEN_ID=<printed_id>
+
+# 2. Deploy new launchpad instance
+stellar contract deploy \
+  --wasm-hash <LAUNCHPAD_WASM_HASH> \
+  --source deployer \
+  --network testnet
+export LAUNCHPAD_ID=<printed_id>
+
+# 3. Initialize token — admin MUST be the launchpad address
+stellar contract invoke --id $TOKEN_ID --source deployer --network testnet \
+  -- initialize --admin $LAUNCHPAD_ID
+
+# 4. Initialize launchpad
+export FUNDING_TOKEN=CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC
+export DEADLINE=1800000000  # Jan 15 2027
+
+stellar contract invoke --id $LAUNCHPAD_ID --source deployer --network testnet \
+  -- initialize \
+  --token $TOKEN_ID \
+  --funding_token $FUNDING_TOKEN \
+  --target <TARGET_IN_STROOPS> \
+  --deadline $DEADLINE
+
+# 5. Register in lib/launches.ts
+```
+
+Then add an entry to `lib/launches.ts`:
+
+```ts
+{
+  id: "launch-N",
+  name: "PROJECT NAME",
+  ticker: "TKR",
+  launchpadId: "<LAUNCHPAD_ID>",
+  tokenId: "<TOKEN_ID>",
+  softCap: 1000,
+  liquidity: 62.5,
+  offered: "1900000 TKR",
+  icon: "https://emojicdn.elk.sh/🚀?style=twitter",
+}
+```
 
 ---
 
@@ -169,11 +237,9 @@ cargo clean && cargo build --target wasm32-unknown-unknown --release
 ```
 
 Compiled `.wasm` files output to:
-
-```
 target/wasm32-unknown-unknown/release/token.wasm
+
 target/wasm32-unknown-unknown/release/launchpad.wasm
-```
 
 ### Deploy to Testnet
 
@@ -200,7 +266,7 @@ stellar contract invoke --id $TOKEN_ID --source deployer --network testnet \
 
 # Initialize launchpad
 export FUNDING_TOKEN=$(stellar contract id asset --asset native --network testnet)
-export DEADLINE=$(( $(date +%s) + 86400 ))
+export DEADLINE=1800000000  # Jan 15 2027
 
 stellar contract invoke --id $LAUNCHPAD_ID --source deployer --network testnet \
   -- initialize \
