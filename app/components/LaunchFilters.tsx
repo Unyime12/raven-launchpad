@@ -49,7 +49,7 @@ export default function LaunchFilters({
             className={`px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase border transition-all
               ${
                 status === opt.value
-                  ? "bg-violet-600 border-violet-500 text-white"
+                  ? "bg-[#524981] border-violet-500 text-white"
                   : "bg-zinc-900 border-zinc-800 text-zinc-500 hover:border-zinc-600 hover:text-zinc-300"
               }`}
           >

@@ -53,7 +53,7 @@ export default function WalletConnection() {
         <button
           onClick={handleConnect}
           disabled={loading || !walletsKit}
-          className={`${buttonBaseClass} border border-[#3B0A82]/60 bg-zinc-950 hover:bg-[#3B0A82]/10 hover:border-[#3B0A82]`}
+          className={`${buttonBaseClass} border border-[#524981]/60 bg-zinc-950 hover:bg-[#3B0A82]/80 hover:border-[#524981]`}
           style={{ borderColor: "rgba(59,10,130,0.5)" }}
         >
           {loading ? (
@@ -62,11 +62,11 @@ export default function WalletConnection() {
               style={{ borderColor: "#7c3aed", borderRightColor: "transparent" }}
             />
           ) : (
-            <FaWallet style={{ color: "#7c3aed" }} className="text-sm" />
+            <FaWallet style={{ color: "#524981" }} className="text-sm" />
           )}
           <span
             className="text-sm font-black tracking-widest uppercase"
-            style={{ color: "#7c3aed" }}
+            style={{ color: "#524981" }}
           >
             {loading ? "Connecting..." : "Connect"}
           </span>

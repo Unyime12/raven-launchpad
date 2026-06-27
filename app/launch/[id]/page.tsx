@@ -30,7 +30,7 @@ import {
 } from "lucide-react";
 import { FaWallet } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
-import { LAUNCHES } from "@/app/lib/launches"; 
+import { LAUNCHES } from "@/app/lib/launches";
 
 const RPC_URL = "https://soroban-testnet.stellar.org:443";
 const PASSPHRASE = Networks.TESTNET;
@@ -50,7 +50,6 @@ function fmtAddr(addr: string) {
   return `${addr.slice(0, 8)}...${addr.slice(-6)}`;
 }
 
- 
 const STATUS_CFG: Record<
   number,
   { label: string; badge: string; heading: string }
@@ -71,7 +70,7 @@ const STATUS_CFG: Record<
     heading: "Sale Ended",
   },
 };
- 
+
 function CopyBtn({ value }: { value: string }) {
   const [copied, setCopied] = useState(false);
   return (
@@ -87,7 +86,7 @@ function CopyBtn({ value }: { value: string }) {
     </button>
   );
 }
- 
+
 function SkeletonRow() {
   return (
     <div className="flex justify-between py-3 border-b border-zinc-800/50">
@@ -96,7 +95,7 @@ function SkeletonRow() {
     </div>
   );
 }
- 
+
 function TimelineStep({
   title,
   desc,
@@ -125,7 +124,9 @@ function TimelineStep({
       </div>
       <div className="pb-5">
         <p
-          className={`text-xs font-bold ${active ? "text-white" : done ? "text-zinc-400" : "text-zinc-600"}`}
+          className={`text-xs font-bold ${
+            active ? "text-white" : done ? "text-zinc-400" : "text-zinc-600"
+          }`}
         >
           {title}
         </p>
@@ -135,12 +136,11 @@ function TimelineStep({
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
 export default function LaunchDetailPage() {
   const params = useParams();
   const id = params?.id as string;
 
-  const launch = LAUNCHES.find((l: { id: string; }) => l.id === id);
+  const launch = LAUNCHES.find((l: { id: string }) => l.id === id);
   if (!launch) return notFound();
 
   const { address: connectedAddress, walletsKit, setAddress } = useWallet();
@@ -163,7 +163,6 @@ export default function LaunchDetailPage() {
     hash?: string;
   } | null>(null);
 
-  // ── Read chain ──────────────────────────────────────────────────────────────
   const readChain = useCallback(async () => {
     try {
       setChainLoading(true);
@@ -255,7 +254,6 @@ export default function LaunchDetailPage() {
     }
   }, [txStatus]);
 
-  // ── Transactions ────────────────────────────────────────────────────────────
   const sendTx = async (method: string, ...args: any[]) => {
     if (!connectedAddress || !walletsKit) return;
     setTxLoading(true);
@@ -316,7 +314,6 @@ export default function LaunchDetailPage() {
   const handleRefund = () =>
     sendTx("refund", new Address(connectedAddress!).toScVal());
 
-  // ── Derived ─────────────────────────────────────────────────────────────────
   const progress = pct(funded, target);
   const fundedXlm = stroopsToXlm(funded);
   const targetXlm = target > 0n ? stroopsToXlm(target) : String(launch.softCap);
@@ -336,16 +333,27 @@ export default function LaunchDetailPage() {
   const cfg = STATUS_CFG[state ?? 0];
 
   // Token icon placeholder
-  const hue = launch.ticker
-    .split("")
-    .reduce((acc: any, c: string) => acc + c.charCodeAt(0), 0) % 360;
+  const hue =
+    launch.ticker
+      .split("")
+      .reduce((acc: any, c: string) => acc + c.charCodeAt(0), 0) % 360;
 
   // Metadata table rows
   const metaRows = [
-    { label: "Presale Address", value: launch.launchpadId, copyable: true, link: `https://stellar.expert/explorer/testnet/contract/${launch.launchpadId}` },
+    {
+      label: "Presale Address",
+      value: launch.launchpadId,
+      copyable: true,
+      link: `https://stellar.expert/explorer/testnet/contract/${launch.launchpadId}`,
+    },
     { label: "Token Name", value: launch.name },
     { label: "Token Symbol", value: launch.ticker },
-    { label: "Token Address", value: launch.tokenId, copyable: true, link: `https://stellar.expert/explorer/testnet/contract/${launch.tokenId}` },
+    {
+      label: "Token Address",
+      value: launch.tokenId,
+      copyable: true,
+      link: `https://stellar.expert/explorer/testnet/contract/${launch.tokenId}`,
+    },
     { label: "Tokens For Presale", value: launch.offered },
     { label: "Tokens For Liquidity", value: `${launch.liquidity}% of raise` },
     { label: "Soft Cap", value: `${targetXlm} XLM` },
@@ -355,16 +363,7 @@ export default function LaunchDetailPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-zinc-200 font-mono">
-      {/* subtle grid bg */}
-      <div
-        className="fixed inset-0 opacity-[0.025] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(#7c3aed 1px, transparent 1px), linear-gradient(90deg, #7c3aed 1px, transparent 1px)`,
-          backgroundSize: "48px 48px",
-        }}
-      />
-
+    <div className="min-h-screen bg-[#202025] text-zinc-200 font-mono">
       <div className="relative max-w-6xl mx-auto px-4 py-8 pb-28">
         {/* ── Back ── */}
         <Link
@@ -415,7 +414,6 @@ export default function LaunchDetailPage() {
 
         {/* ── Two-column layout ── */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6 items-start">
-
           {/* ── LEFT: metadata table ── */}
           <div className="border border-zinc-800 rounded-2xl overflow-hidden bg-zinc-900/20">
             <div className="px-6 py-4 border-b border-zinc-800">
@@ -436,7 +434,9 @@ export default function LaunchDetailPage() {
                       className="flex items-center justify-between px-6 py-3 
                                  hover:bg-zinc-800/20 transition-colors gap-4"
                     >
-                      <span className="text-xs text-zinc-500 shrink-0">{label}</span>
+                      <span className="text-xs text-zinc-500 shrink-0">
+                        {label}
+                      </span>
                       <div className="flex items-center gap-1 text-right">
                         {link ? (
                           <a
@@ -446,7 +446,9 @@ export default function LaunchDetailPage() {
                             className="text-xs text-violet-400 hover:text-violet-300 
                                        font-mono transition-colors flex items-center gap-1"
                           >
-                            {value.length > 20 ? fmtAddr(value as string) : value}
+                            {value.length > 20
+                              ? fmtAddr(value as string)
+                              : value}
                             <ExternalLink size={10} />
                           </a>
                         ) : (
@@ -463,7 +465,6 @@ export default function LaunchDetailPage() {
 
           {/* ── RIGHT: action panel ── */}
           <div className="space-y-4">
-
             {/* Progress card */}
             <div className="border border-zinc-800 rounded-2xl p-5 bg-zinc-900/20 space-y-4">
               <h2 className="text-sm font-black text-white">
@@ -517,7 +518,9 @@ export default function LaunchDetailPage() {
                     <span className="text-sm font-bold text-white">
                       {myContrib} {launch.ticker}
                     </span>
-                    <span className="text-xs text-zinc-500">{myContrib} XLM</span>
+                    <span className="text-xs text-zinc-500">
+                      {myContrib} XLM
+                    </span>
                   </div>
                 </div>
               )}
@@ -576,14 +579,15 @@ export default function LaunchDetailPage() {
                     parseFloat(buyAmount) <= 0 ||
                     parseFloat(buyAmount) > parseFloat(xlmBalance)
                   }
-                  className="w-full py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 
+                  className="w-full py-3.5 rounded-xl bg-[#524981] hover:bg-violet-500 
                              text-white font-black tracking-widest uppercase text-sm 
                              transition-all disabled:opacity-40 disabled:cursor-not-allowed 
                              active:scale-[0.98] flex items-center justify-center gap-2"
                 >
                   {txLoading ? (
                     <>
-                      <RotateCcw size={15} className="animate-spin" /> Broadcasting…
+                      <RotateCcw size={15} className="animate-spin" />{" "}
+                      Broadcasting…
                     </>
                   ) : parseFloat(buyAmount || "0") > parseFloat(xlmBalance) ? (
                     <>
@@ -664,7 +668,8 @@ export default function LaunchDetailPage() {
                 >
                   {txLoading ? (
                     <>
-                      <RotateCcw size={15} className="animate-spin" /> Processing…
+                      <RotateCcw size={15} className="animate-spin" />{" "}
+                      Processing…
                     </>
                   ) : (
                     <>
@@ -757,36 +762,6 @@ export default function LaunchDetailPage() {
           </div>
         </div>
       </div>
-
-      {!connectedAddress && (
-  <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-full max-w-xs px-4 z-50">
-    <button
-      onClick={() => {
-        if (!walletsKit) return;
-        walletsKit.openModal({
-          onWalletSelected: async (option) => {
-            const { address } = await walletsKit.getAddress();
-            setAddress(address);
-            return option;
-          },
-        });
-      }}
-            className="group relative w-full overflow-hidden rounded-2xl bg-zinc-950 
-                       p-[1.5px] transition-all hover:scale-105 active:scale-95 
-                       shadow-[0_0_40px_-10px_rgba(124,58,237,0.4)]"
-          >
-            <div className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#7c3aed_0%,#1e1b4b_50%,#7c3aed_100%)]" />
-            <div className="relative flex h-full w-full items-center justify-center 
-                            gap-3 rounded-[15px] bg-zinc-950 px-8 py-4 transition-all 
-                            group-hover:bg-zinc-900/50 backdrop-blur-xl">
-              <FaWallet className="text-violet-400 text-lg shrink-0" />
-              <span className="text-sm font-black tracking-widest text-violet-400 uppercase">
-                Connect Wallet
-              </span>
-            </div>
-          </button>
-        </div>
-      )}
 
       {/* ── TX Toast ── */}
       <AnimatePresence>
