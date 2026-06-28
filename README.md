@@ -6,8 +6,7 @@ A multi-token launchpad (IDO) built on Stellar/Soroban. Contributors fund raises
 
 > [https://raven-launchpad.vercel.app](https://raven-launchpad.vercel.app)
 
-> 🎥 Demo Video: [Coming Soon](#)
-
+> 🎥 Demo Video: [Watch on YouTube](https://youtu.be/KjZI1uxUs2Y?si=NIVk09Sqj0ErFZl0)
 
 ---
 
@@ -113,10 +112,10 @@ This eliminates the need for users to sign a separate mint approval — the laun
 |---|---|---|---|---|
 | RAVEN | RVN | `CAKYJF4FRQMF3VS43THFNXB3RWCOHOXUEQE6JRCTEBRRLBD2I5CR23PB` | `CCHUVB7C4VB4QT7XCFOQFAJI4GTJNZTZE37GQY5H3UK53EYISSEVWUKH` | 1,000 XLM |
 | NORMIES | NORM | `CACCNZESK5YAQYYN5NLZLBEJNNPTTNN3H5YK6ICWXEL65UVLGVHNP534` | `CDWEL3QFJ52UNTZFQVM3O424VYC63STQPI7OIMNQ6G2DA5CCFJM5X4JT` | 50,000 XLM |
-| CHIPS | CHIPS | TBD | TBD | 1,000 XLM |
-| GOAT | GOAT | TBD | TBD | 5,000 XLM |
-| PEPE | PEPE | TBD | TBD | 2,000 XLM |
-| ROCKET | RKT | TBD | TBD | 10,000 XLM |
+| CHIPS | CHIPS | `CBA5VCHI6NCZ7TSHWYB33F2DREB2FQ4TTYJWHSBQ6LCNUDQYA3R5TUC3` | `CD6Z2V73CB5XE7WFXWLINLNL5P6A6HRJHXLJMUP4EP46RI7PMX57OFZR` | 1,000 XLM |
+| GOAT | GOAT | `CDNY3EF3MP5GR6VMXUYLHB7RGZ75M5C2RWD77TQONVOAVC4P57BTYVGS` | `CCA3OANHQFHR72S6IC4JDK66NAXLXONFIZLYUUPX23RNDU5FRSXTQGWU` | 5,000 XLM |
+| PEPE | PEPE | `CBEZIUGR3NL4BIU32YLTZPW2TVPHT6UGUPX64RJCLNAMGSBFVOUDYV56` | `CAIPH3566FKQPLQ74ZNKPNF5O6CP7UC7BJZHPF65AZEOMGO5M4VH6SJ6` | 2,000 XLM |
+| ROCKET | RKT | `CDWFVNRGEBVI4VLCXNQ6YUVCJ2CNBRA2IJO4HIASILAV5PDRXFCCMUV3` | `CB5ILLXVLOXFQK3EDYXJK6SPXZBAHE4JQFIOLEMTQBBUACMIY4FLU4NY` | 10,000 XLM |
 
 **Funding Token (XLM SAC):** `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
 
@@ -128,8 +127,8 @@ This eliminates the need for users to sign a separate mint approval — the laun
 
 | | |
 |---|---|
-| **Transaction** | `fadc55b6446caddb9aaf53fb0ca81fb0e83dac9be7dc9bf3c0c6978d1027d84f` |
-| **Explorer** | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/fadc55b6446caddb9aaf53fb0ca81fb0e83dac9be7dc9bf3c0c6978d1027d84f) |
+| **Transaction** | `93af8aab7711c65e7272ef2f7f59ab7232f18e3d780e7e524d3c85c7858080c9` |
+| **Explorer** | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/93af8aab7711c65e7272ef2f7f59ab7232f18e3d780e7e524d3c85c7858080c9) |
 | **Action** | Launchpad calls `token.mint()` via `authorize_as_current_contract` |
 
 ---

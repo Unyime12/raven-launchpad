@@ -612,7 +612,7 @@ export default function LaunchDetailPage() {
                 <div className="flex items-center gap-2">
                   <CheckCircle2 size={16} className="text-emerald-400" />
                   <p className="text-xs font-bold text-emerald-400 uppercase tracking-widest">
-                    Launch Successful — Claim Tokens
+                    Claim Tokens
                   </p>
                 </div>
                 <p className="text-zinc-400 text-sm">
@@ -634,7 +634,7 @@ export default function LaunchDetailPage() {
                     </>
                   ) : (
                     <>
-                      <Coins size={15} /> Claim {myContrib} {launch.ticker}
+                     Claim {myContrib} {launch.ticker}
                     </>
                   )}
                 </button>
