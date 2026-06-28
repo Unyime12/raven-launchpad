@@ -595,7 +595,7 @@ export default function LaunchDetailPage() {
                     </>
                   ) : (
                     <>
-                      <Rocket size={15} /> Buy {launch.ticker}
+                      Buy {launch.ticker}
                     </>
                   )}
                 </button>

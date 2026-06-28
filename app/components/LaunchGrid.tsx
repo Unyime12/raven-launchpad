@@ -83,7 +83,6 @@ export default function LaunchGrid() {
         {filtered.length === 0 ? (
           // Empty state
           <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
-            <Rocket size={40} className="text-zinc-700" />
             <p className="text-zinc-500 text-sm">
               {search
                 ? `No launches match "${search}"`

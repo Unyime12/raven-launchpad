@@ -16,7 +16,7 @@ A multi-token launchpad (IDO) built on Stellar/Soroban. Contributors fund raises
 ![Mobile Responsive View](app/screenshots/mobile-responsive.png)
 
 ### CI/CD Pipeline
-![CI](https://github.com/youthisguy/s_token_launchpad/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/Unyime12/raven-launchpad/actions/workflows/ci.yml/badge.svg)
 ![CI Screenshot](app/screenshots/ci-cd.png)
 
 ### Test Output
