@@ -8,19 +8,23 @@ A multi-token launchpad (IDO) built on Stellar/Soroban. Contributors fund raises
 
 > 🎥 Demo Video: [Coming Soon](#)
 
+
 ---
 
 ## Screenshots
 
 ### Mobile Responsive UI
-![Mobile Responsive View](screenshots/mobile-responsive.png)
+![Mobile Responsive View](app/screenshots/mobile-responsive.png)
 
 ### CI/CD Pipeline
 ![CI](https://github.com/youthisguy/s_token_launchpad/actions/workflows/ci.yml/badge.svg)
-![CI Screenshot](screenshots/ci-cd.png)
+![CI Screenshot](app/screenshots/ci-cd.png)
 
 ### Test Output
-![Test Output](screenshots/test-output.png)
+![Test Output](app/screenshots/test-output.png)
+
+### Homepage
+![Homepage](app/screenshots/homepage.png)
 
 ---
 
@@ -40,19 +44,16 @@ Each launch is an independent pair of Token + Launchpad contracts, registered in
 ## Architecture
 
 Two Soroban smart contracts power each launch, with a Next.js frontend on top.
+
+```
 .
-
 ├── contracts/
-
 │   ├── launchpad/        # Core IDO logic — buy, claim, refund, state machine
-
 │   └── token/            # Project token — mint, transfer, balance, allowance
-
 └── app/                  # Next.js 14 frontend
-
-└── lib/
-
-└── launches.ts   # Multi-launch registry — add new projects here
+    └── lib/
+        └── launches.ts   # Multi-launch registry — add new projects here
+```
 
 ### Contract Flow
 
