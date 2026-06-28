@@ -46,8 +46,7 @@ export default function Home() {
     ))}
   </svg>
 
-  <section className="relative z-10 max-w-5xl mx-auto px-4 pt-16 pb-20 flex items-center justify-between">
-    <div>
+  <section className="relative z-10 max-w-5xl mx-auto px-4 pt-16 pb-20 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"> <div>
       <h1 className="text-4xl font-black text-white tracking-tight">
         Token <span className="text-white">Launchpad</span>
       </h1>
@@ -55,10 +54,13 @@ export default function Home() {
         Discover and Participate in new token launches on Raven Launchpad.
       </p>
     </div>
-    <button className="px-5 py-3 rounded-xl bg-white  hover:bg-white/55
-      text-black font-bold text-sm tracking-wider transition-all flex items-center gap-2">
-      <Rocket size={15} /> Add Project
-    </button>
+    <button className="px-4 py-2.5 md:px-5 md:py-3 rounded-xl bg-white hover:bg-white/55
+  text-black font-bold text-xs md:text-sm tracking-wider transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap w-fit">
+  <Rocket size={13} className="md:hidden" />
+  <Rocket size={15} className="hidden md:block" />
+  <span className="hidden sm:inline">Add Project</span>
+  <span className="sm:hidden">Add Project</span>
+</button>
   </section>
 </div>
 
