@@ -3,6 +3,7 @@ import "./globals.css";
 import { WalletProvider } from "./contexts/WalletContext";
 import WalletConnection from "./components/WalletConnection";
 import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "RAVEN LAUNCHPAD",
@@ -16,6 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+          <head>
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="b6cb255b-18bb-4aea-9480-178831be87b5"
+        />
+      </head>
       <Analytics />
       <body className="antialiased bg-[#0a0a0f]">
         <WalletProvider>
@@ -25,25 +33,28 @@ export default function RootLayout({
               <div className="mx-5 flex items-center justify-between py-4">
                 {/* Logo */}
                 <div className="flex items-center gap-3">
-  {/* Logo image */}
-  <img
-    src="/Raven-logo.png"
-    alt="Raven"
-    className="h-10 w-10 object-contain"
-  />
+                  {/* Logo image */}
+                  <img
+                    src="/Raven-logo.png"
+                    alt="Raven"
+                    className="h-10 w-10 object-contain"
+                  />
 
-  {/* Wordmark */}
-  <span
-    className="text-white text-xl tracking-wide"
-    style={{ fontFamily: "'Rajdhani', sans-serif", fontWeight: 700, letterSpacing: "0.08em" }}
-  >
-    RAVEN 
-  </span>
-</div>
+                  {/* Wordmark */}
+                  <span
+                    className="text-white text-xl tracking-wide"
+                    style={{
+                      fontFamily: "'Rajdhani', sans-serif",
+                      fontWeight: 700,
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    RAVEN
+                  </span>
+                </div>
 
                 {/* Right side — network pill + wallet */}
                 <div className="flex items-center gap-3">
- 
                   <WalletConnection />
                 </div>
               </div>
