@@ -65,4 +65,15 @@ export const LAUNCHES = [
       offered: "95700000 RKT",
       icon: "https://emojicdn.elk.sh/🚀?style=twitter",
     },
+    {
+      id: "launch-1784975073989",
+      name: "FISH",
+      ticker: "FISH",
+      launchpadId: "CA5TKDFAZLRL6E4JRHHJ7CBY6BNJFD5AKKKDDWNG4BLI27CAULIQLTXP",
+      tokenId: "CB4LF4JFTQU4GHWI4FP7TEQ47EJHFUKX7GX2PDP5ZKQBSAFZNE2ZCYUO",
+      softCap: 10000,
+      liquidity: 62.5,
+      offered: "190090000 FISH",
+      icon: "https://api.iconify.design/tabler/fish.svg",
+    }
   ];

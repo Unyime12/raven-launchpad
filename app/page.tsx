@@ -2,6 +2,7 @@
 import { useState } from "react";
 import LaunchGrid from "./components/LaunchGrid";
 import { PlusCircle, Twitter, Send, Github, Loader2 } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const [showToast, setShowToast] = useState(false);
@@ -170,16 +171,16 @@ export default function Home() {
               Discover and Participate in new token launches on Raven Launchpad.
             </p>
           </div>
-          <button
-            onClick={handleAddProject}
-            className="px-4 py-2.5 md:px-5 md:py-3 rounded-xl bg-white/10 hover:bg-white/15
-              border border-white/10 text-zinc-400 font-bold text-xs md:text-sm tracking-wider 
-              transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap w-fit cursor-not-allowed"
+          <Link
+            href="/launch/new"
+            className="px-4 py-2.5 md:px-5 md:py-3 rounded-xl bg-violet-500 hover:bg-violet-500
+    border border-violet-500/30 text-white font-bold text-xs md:text-sm tracking-wider 
+    transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap w-fit"
           >
             <PlusCircle size={13} className="md:hidden" />
             <PlusCircle size={15} className="hidden md:block" />
             Add Project
-          </button>
+          </Link>
         </section>
       </div>
 

@@ -363,7 +363,7 @@ export default function NewLaunchPage() {
             <div className="flex items-center gap-3">
               <StepBadge status={steps.initToken.status} />
               <div>
-                <p className="text-sm font-bold text-white">3. Initialize Token (admin = launchpad)</p>
+                <p className="text-sm font-bold text-white">3. Initialize Token </p>
                 {steps.initToken.error && (
                   <p className="text-[10px] text-rose-400 mt-0.5">{steps.initToken.error}</p>
                 )}
