@@ -288,24 +288,7 @@ export default function LaunchCard({
 
       {/* ── Row 6: action row ── */}
       <div className="flex gap-2 pt-1 mt-auto">
-        {/* "Ended" pill — shown when not live */}
-        <div
-          className={`flex-1 py-2.5 rounded-xl text-center text-xs font-bold tracking-wider transition-colors
-            ${
-              isEnded
-                ? "bg-zinc-800/50 text-zinc-500 border border-zinc-700/50"
-                : isLive
-                ? "bg-violet-500/10 text-violet-400 border border-violet-500/20"
-                : "bg-zinc-500/10 text-zinc-400 border border-zinc-500/20"
-            }`}
-        >
-          {chain?.state === 0
-            ? "LIVE"
-            : chain?.state === 1
-            ? "SUCCESS"
-            : "ENDED"}
-        </div>
-
+ 
         {/* View button */}
         <Link
           href={`/launch/${launch.id}`}
