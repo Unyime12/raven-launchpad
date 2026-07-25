@@ -86,11 +86,16 @@ export default function Home() {
       <footer className="mt-12 border-t border-white/5" style={{ background: "#1C1A20" }}>
         <div className="max-w-5xl mx-auto px-4 py-10 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <div>
-            <h2 className="text-lg font-black text-white tracking-tight">
-              Raven <span className="text-violet-400">Launchpad</span>
-            </h2>
+          <div className="flex items-center gap-3">
+                  {/* Logo image */}
+                  <img
+                    src="/Raven-logo.png"
+                    alt="Raven"
+                    className="h-8 w-8 mb-4 object-contain"
+                  />
+                </div>
             <p className="text-zinc-500 text-xs mt-1 max-w-xs">
-              Discover, track, and participate in the newest token launches — all in one place.
+            Explore the latest token launches on Stellar.
             </p>
           </div>
 
@@ -115,7 +120,7 @@ export default function Home() {
             <a href="#" className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors">
               <Send size={16} />
             </a>
-            <a href="#" className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors">
+            <a href="https://github.com/Unyime12/raven-launchpad" className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors">
               <Github size={16} />
             </a>
           </div>
