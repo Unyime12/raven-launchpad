@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import LaunchCard, { type LaunchMeta } from "./LaunchCard";
 import LaunchFilters, {
   type FilterStatus,
@@ -8,19 +8,25 @@ import LaunchFilters, {
 } from "./LaunchFilters";
 import { Rocket } from "lucide-react";
 import { LAUNCHES } from "../lib/launches";
- 
 
 export default function LaunchGrid() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<FilterStatus>("all");
   const [sort, setSort] = useState<SortKey>("default");
   const [chainStates, setChainStates] = useState<Record<string, number>>({});
+  const [launches, setLaunches] = useState<LaunchMeta[]>([]);
 
   const handleChainState = (id: string, state: number) => {
     setChainStates((prev) =>
       prev[id] === state ? prev : { ...prev, [id]: state }
     );
   };
+
+  useEffect(() => {
+    fetch("/api/launches", { cache: "no-store" })
+      .then((res) => res.json())
+      .then(setLaunches);
+  }, []);
 
   const filtered = useMemo(() => {
     let list = [...LAUNCHES];
@@ -30,12 +36,11 @@ export default function LaunchGrid() {
       const q = search.trim().toLowerCase();
       list = list.filter(
         (l) =>
-          l.name.toLowerCase().includes(q) ||
-          l.ticker.toLowerCase().includes(q)
+          l.name.toLowerCase().includes(q) || l.ticker.toLowerCase().includes(q)
       );
     }
 
-    // Status filter 
+    // Status filter
     if (status !== "all") {
       const stateMap: Record<FilterStatus, number> = {
         all: -1,
@@ -46,7 +51,7 @@ export default function LaunchGrid() {
       const target = stateMap[status];
       list = list.filter((l) => {
         const s = chainStates[l.id];
-        if (s === undefined) return true;  
+        if (s === undefined) return true;
         return s === target;
       });
     }

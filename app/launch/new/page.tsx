@@ -1,8 +1,9 @@
 "use client";
 
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useWallet } from "@/app/contexts/WalletContext";
 import {
   rpc as StellarRpc,
@@ -87,10 +88,15 @@ export default function NewLaunchPage() {
   const [offered, setOffered] = useState(""); //  
   const [deadline, setDeadline] = useState(""); 
   const [icon, setIcon] = useState("");
+  const router = useRouter();
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [launchId, setLaunchId] = useState<string | null>(null);
 
   // deploy state
   const [tokenId, setTokenId] = useState<string | null>(null);
   const [launchpadId, setLaunchpadId] = useState<string | null>(null);
+
+
 
   const [steps, setSteps] = useState<Record<string, StepState>>({
     deployToken: { status: "idle" },
@@ -229,6 +235,30 @@ export default function NewLaunchPage() {
   offered: "${offered} ${ticker}",
   icon: "${icon || `https://emojicdn.elk.sh/🚀?style=twitter`}",
 }`;
+
+useEffect(() => {
+    if (!allDone) return;
+  
+    const launchEntry = {
+      id: `launch-${Date.now()}`,
+      name,
+      ticker,
+      launchpadId,
+      tokenId,
+      softCap: Number(softCap),
+      liquidity: Number(liquidity),
+      offered: `${offered} ${ticker}`,
+      icon: icon || "https://api.iconify.design/tabler/fish.svg",
+    };
+  
+    fetch("/api/launches", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(launchEntry),
+    })
+      .then((res) => res.json())
+      .catch((e) => console.error("Failed to save launch:", e));
+  }, [allDone]);
 
   return (
     <div className="min-h-screen bg-[#202025] text-zinc-200 font-mono">
@@ -402,23 +432,49 @@ export default function NewLaunchPage() {
         </div>
 
         {/* ── Snippet output ── */}
-        {allDone && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="border border-emerald-500/20 rounded-2xl p-5 bg-emerald-500/5 mt-6 space-y-3"
-          >
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-bold text-emerald-400 uppercase tracking-widest flex items-center gap-1.5">
-                <CheckCircle2 size={14} /> Ready — paste into lib/launches.ts
-              </p>
-              <CopyButton value={snippet} />
-            </div>
-            <pre className="text-[11px] text-zinc-300 bg-black/40 rounded-xl p-4 overflow-x-auto whitespace-pre-wrap">
-              {snippet}
-            </pre>
-          </motion.div>
-        )}
+       {allDone && (
+  <motion.div
+    initial={{ opacity: 0, y: 8 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="border border-emerald-500/20 rounded-2xl p-5 bg-emerald-500/5 mt-6 space-y-3"
+  >
+    <div className="flex items-center gap-2">
+      {saveStatus === "saving" && (
+        <>
+          <Loader2 size={14} className="animate-spin text-emerald-400" />
+          <p className="text-xs font-bold text-emerald-400 uppercase tracking-widest">
+            Deployed! — Saving...
+          </p>
+        </>
+      )}
+      {saveStatus === "saved" && (
+        <>
+          <CheckCircle2 size={14} className="text-emerald-400" />
+          <p className="text-xs font-bold text-emerald-400 uppercase tracking-widest">
+            Launch is live! — Routing...
+          </p>
+        </>
+      )}
+      {saveStatus === "error" && (
+        <>
+          <AlertCircle size={14} className="text-rose-400" />
+          <p className="text-xs font-bold text-rose-400 uppercase tracking-widest">
+            Contracts deployed, but saving failed — try again
+          </p>
+        </>
+      )}
+    </div>
+
+    {saveStatus === "error" && (
+      <button
+        onClick={() => setSaveStatus("idle")}
+        className="text-xs font-bold text-violet-400 hover:text-violet-300 transition-colors"
+      >
+        Retry save
+      </button>
+    )}
+  </motion.div>
+)}
       </div>
     </div>
   );
