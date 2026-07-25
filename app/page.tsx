@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import LaunchGrid from "./components/LaunchGrid";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Twitter, Send, Github } from "lucide-react";
 
 export default function Home() {
   const [showToast, setShowToast] = useState(false);
@@ -12,8 +12,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#202025] text-zinc-200 font-mono">
-      
+    <div className="min-h-screen bg-[#202025] text-zinc-200 font-mono flex flex-col">
       {/* Toast */}
       {showToast && (
         <div className="fixed top-5 right-5 z-50 bg-zinc-800 border border-zinc-700 
@@ -24,6 +23,7 @@ export default function Home() {
       )}
 
       <div className="w-full relative overflow-hidden" style={{ background: "#1C1A20" }}>
+        {/* ... your existing svg + header section stays exactly the same ... */}
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 1200 180"
@@ -77,7 +77,54 @@ export default function Home() {
           </button>
         </section>
       </div>
-      <LaunchGrid />
+
+      <div className="flex-1">
+        <LaunchGrid />
+      </div>
+
+      {/* Footer */}
+      <footer className="mt-12 border-t border-white/5" style={{ background: "#1C1A20" }}>
+        <div className="max-w-5xl mx-auto px-4 py-10 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 className="text-lg font-black text-white tracking-tight">
+              Raven <span className="text-violet-400">Launchpad</span>
+            </h2>
+            <p className="text-zinc-500 text-xs mt-1 max-w-xs">
+              Discover, track, and participate in the newest token launches — all in one place.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 text-xs">
+            <div className="flex flex-col gap-2">
+              <span className="text-zinc-400 font-bold tracking-wider uppercase text-[11px]">Product</span>
+              <a href="#" className="text-zinc-500 hover:text-violet-400 transition-colors">Launches</a>
+              <a href="#" className="text-zinc-500 hover:text-violet-400 transition-colors">Roadmap</a>
+              <a href="#" className="text-zinc-500 hover:text-violet-400 transition-colors">Docs</a>
+            </div>
+            <div className="flex flex-col gap-2">
+              <span className="text-zinc-400 font-bold tracking-wider uppercase text-[11px]">Legal</span>
+              <a href="#" className="text-zinc-500 hover:text-violet-400 transition-colors">Terms</a>
+              <a href="#" className="text-zinc-500 hover:text-violet-400 transition-colors">Privacy</a>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <a href="#" className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors">
+              <Twitter size={16} />
+            </a>
+            <a href="#" className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors">
+              <Send size={16} />
+            </a>
+            <a href="#" className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors">
+              <Github size={16} />
+            </a>
+          </div>
+        </div>
+
+        <div className="border-t border-white/5 py-4 text-center text-[11px] text-zinc-600">
+          © {new Date().getFullYear()} Raven Launchpad. All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 }
