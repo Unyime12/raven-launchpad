@@ -1,29 +1,45 @@
 "use client";
 import { useState } from "react";
 import LaunchGrid from "./components/LaunchGrid";
-import { PlusCircle, Twitter, Send, Github } from "lucide-react";
+import { PlusCircle, Twitter, Send, Github, Loader2 } from "lucide-react";
 
 export default function Home() {
   const [showToast, setShowToast] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [showNoMore, setShowNoMore] = useState(false);
 
   const handleAddProject = () => {
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
   };
 
+  const handleViewAll = () => {
+    setLoadingMore(true);
+    // TODO: replace this timeout with actual fetch logic
+    // that loads the next 6 launches once available
+    setTimeout(() => {
+      setLoadingMore(false);
+      setShowNoMore(true);
+    }, 1000);
+  };
+
   return (
     <div className="min-h-screen bg-[#202025] text-zinc-200 font-mono flex flex-col">
       {/* Toast */}
       {showToast && (
-        <div className="fixed top-5 right-5 z-50 bg-zinc-800 border border-zinc-700 
+        <div
+          className="fixed top-5 right-5 z-50 bg-zinc-800 border border-zinc-700 
           text-zinc-200 text-sm font-mono px-4 py-3 rounded-xl shadow-lg
-          animate-fade-in flex items-center gap-2">
+          animate-fade-in flex items-center gap-2"
+        >
           🚧 Project submissions coming soon
         </div>
       )}
 
-      <div className="w-full relative overflow-hidden" style={{ background: "#1C1A20" }}>
-        {/* ... your existing svg + header section stays exactly the same ... */}
+      <div
+        className="w-full relative overflow-hidden"
+        style={{ background: "#1C1A20" }}
+      >
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 1200 180"
@@ -32,28 +48,116 @@ export default function Home() {
         >
           <defs>
             <symbol id="xlm" viewBox="0 0 100 100">
-              <path fill="currentColor" d="M50 5C25.1 5 5 25.1 5 50s20.1 45 45 45 45-20.1 45-45S74.9 5 50 5zm0 8c16.7 0 31.3 9 39.1 22.4L18.3 68.7C16.2 62.9 15 56.6 15 50c0-19.3 15.7-37 35-37zm0 74c-16.7 0-31.3-9-39.1-22.4l70.8-33.3C83.8 37.1 85 43.4 85 50c0 19.3-15.7 37-35 37z"/>
-              <line x1="8" y1="62" x2="92" y2="28" stroke="currentColor" strokeWidth="8" strokeLinecap="round"/>
-              <line x1="8" y1="72" x2="92" y2="38" stroke="currentColor" strokeWidth="8" strokeLinecap="round"/>
+              <path
+                fill="currentColor"
+                d="M50 5C25.1 5 5 25.1 5 50s20.1 45 45 45 45-20.1 45-45S74.9 5 50 5zm0 8c16.7 0 31.3 9 39.1 22.4L18.3 68.7C16.2 62.9 15 56.6 15 50c0-19.3 15.7-37 35-37zm0 74c-16.7 0-31.3-9-39.1-22.4l70.8-33.3C83.8 37.1 85 43.4 85 50c0 19.3-15.7 37-35 37z"
+              />
+              <line
+                x1="8"
+                y1="62"
+                x2="92"
+                y2="28"
+                stroke="currentColor"
+                strokeWidth="8"
+                strokeLinecap="round"
+              />
+              <line
+                x1="8"
+                y1="72"
+                x2="92"
+                y2="38"
+                stroke="currentColor"
+                strokeWidth="8"
+                strokeLinecap="round"
+              />
             </symbol>
           </defs>
-          {[18,80,145,220,285,355,410,480,545,615,672,748,805,872,935,1005,1062,1130].map((x, i) => (
-            <use key={`t${i}`} href="#xlm" x={x} y={[8,30,5,22,10,30,6,18,4,25,8,20,5,28,10,22,6,18][i]}
-              width={[22,16,28,14,20,12,24,16,20,14,26,12,22,16,18,14,24,20][i]}
-              height={[22,16,28,14,20,12,24,16,20,14,26,12,22,16,18,14,24,20][i]}
-              color="#2E2B32" />
+          {[
+            18, 80, 145, 220, 285, 355, 410, 480, 545, 615, 672, 748, 805, 872,
+            935, 1005, 1062, 1130,
+          ].map((x, i) => (
+            <use
+              key={`t${i}`}
+              href="#xlm"
+              x={x}
+              y={
+                [
+                  8, 30, 5, 22, 10, 30, 6, 18, 4, 25, 8, 20, 5, 28, 10, 22, 6,
+                  18,
+                ][i]
+              }
+              width={
+                [
+                  22, 16, 28, 14, 20, 12, 24, 16, 20, 14, 26, 12, 22, 16, 18,
+                  14, 24, 20,
+                ][i]
+              }
+              height={
+                [
+                  22, 16, 28, 14, 20, 12, 24, 16, 20, 14, 26, 12, 22, 16, 18,
+                  14, 24, 20,
+                ][i]
+              }
+              color="#2E2B32"
+            />
           ))}
-          {[40,108,175,248,318,390,450,520,592,648,718,790,858,925,992,1048,1115,1165].map((x, i) => (
-            <use key={`m${i}`} href="#xlm" x={x} y={[75,65,80,60,78,62,80,65,78,60,75,62,78,60,75,65,78,60][i]}
-              width={[14,20,12,18,22,14,16,20,12,18,24,14,16,20,12,18,22,14][i]}
-              height={[14,20,12,18,22,14,16,20,12,18,24,14,16,20,12,18,22,14][i]}
-              color="#2E2B32" />
+          {[
+            40, 108, 175, 248, 318, 390, 450, 520, 592, 648, 718, 790, 858, 925,
+            992, 1048, 1115, 1165,
+          ].map((x, i) => (
+            <use
+              key={`m${i}`}
+              href="#xlm"
+              x={x}
+              y={
+                [
+                  75, 65, 80, 60, 78, 62, 80, 65, 78, 60, 75, 62, 78, 60, 75,
+                  65, 78, 60,
+                ][i]
+              }
+              width={
+                [
+                  14, 20, 12, 18, 22, 14, 16, 20, 12, 18, 24, 14, 16, 20, 12,
+                  18, 22, 14,
+                ][i]
+              }
+              height={
+                [
+                  14, 20, 12, 18, 22, 14, 16, 20, 12, 18, 24, 14, 16, 20, 12,
+                  18, 22, 14,
+                ][i]
+              }
+              color="#2E2B32"
+            />
           ))}
-          {[25,95,158,230,300,368,438,505,572,638,705,775,840,912,978,1042,1108,1162].map((x, i) => (
-            <use key={`b${i}`} href="#xlm" x={x} y={[140,128,145,132,148,130,145,128,142,130,148,132,145,128,142,130,145,132][i]}
-              width={[18,12,20,14,16,22,12,18,14,20,16,12,24,14,18,20,12,16][i]}
-              height={[18,12,20,14,16,22,12,18,14,20,16,12,24,14,18,20,12,16][i]}
-              color="#2E2B32" />
+          {[
+            25, 95, 158, 230, 300, 368, 438, 505, 572, 638, 705, 775, 840, 912,
+            978, 1042, 1108, 1162,
+          ].map((x, i) => (
+            <use
+              key={`b${i}`}
+              href="#xlm"
+              x={x}
+              y={
+                [
+                  140, 128, 145, 132, 148, 130, 145, 128, 142, 130, 148, 132,
+                  145, 128, 142, 130, 145, 132,
+                ][i]
+              }
+              width={
+                [
+                  18, 12, 20, 14, 16, 22, 12, 18, 14, 20, 16, 12, 24, 14, 18,
+                  20, 12, 16,
+                ][i]
+              }
+              height={
+                [
+                  18, 12, 20, 14, 16, 22, 12, 18, 14, 20, 16, 12, 24, 14, 18,
+                  20, 12, 16,
+                ][i]
+              }
+              color="#2E2B32"
+            />
           ))}
         </svg>
 
@@ -70,7 +174,8 @@ export default function Home() {
             onClick={handleAddProject}
             className="px-4 py-2.5 md:px-5 md:py-3 rounded-xl bg-white/10 hover:bg-white/15
               border border-white/10 text-zinc-400 font-bold text-xs md:text-sm tracking-wider 
-              transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap w-fit cursor-not-allowed">
+              transition-all flex items-center gap-1.5 md:gap-2 whitespace-nowrap w-fit cursor-not-allowed"
+          >
             <PlusCircle size={13} className="md:hidden" />
             <PlusCircle size={15} className="hidden md:block" />
             Add Project
@@ -80,47 +185,111 @@ export default function Home() {
 
       <div className="flex-1">
         <LaunchGrid />
+
+        {/* View All Launches */}
+        <div className="max-w-5xl mx-auto px-4 pb-16 flex justify-center">
+          {!showNoMore ? (
+            <button
+              onClick={handleViewAll}
+              disabled={loadingMore}
+              className="flex items-center gap-2 text-sm font-bold text-zinc-400 
+                hover:text-violet-400 transition-colors disabled:opacity-60 
+                disabled:cursor-not-allowed"
+            >
+              {loadingMore ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                "View All Launches"
+              )}
+            </button>
+          ) : (
+            <p className="text-sm text-zinc-600">No more launches</p>
+          )}
+        </div>
       </div>
 
       {/* Footer */}
-      <footer className="mt-12 border-t border-white/5" style={{ background: "#1C1A20" }}>
+      <footer
+        className="mt-12 border-t border-white/5"
+        style={{ background: "#1C1A20" }}
+      >
         <div className="max-w-5xl mx-auto px-4 py-10 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <div>
-          <div className="flex items-center gap-3">
-                  {/* Logo image */}
-                  <img
-                    src="/Raven-logo.png"
-                    alt="Raven"
-                    className="h-8 w-8 mb-4 object-contain"
-                  />
-                </div>
+            <div className="flex items-center gap-3">
+              <img
+                src="/Raven-logo.png"
+                alt="Raven"
+                className="h-8 w-8 mb-4 object-contain"
+              />
+            </div>
             <p className="text-zinc-500 text-xs mt-1 max-w-xs">
-            Explore the latest token launches on Stellar.
+              Explore the latest token launches on Stellar.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 text-xs">
             <div className="flex flex-col gap-2">
-              <span className="text-zinc-400 font-bold tracking-wider uppercase text-[11px]">Product</span>
-              <a href="#" className="text-zinc-500 hover:text-violet-400 transition-colors">Launches</a>
-              <a href="#" className="text-zinc-500 hover:text-violet-400 transition-colors">Roadmap</a>
-              <a href="#" className="text-zinc-500 hover:text-violet-400 transition-colors">Docs</a>
+              <span className="text-zinc-400 font-bold tracking-wider uppercase text-[11px]">
+                Product
+              </span>
+              <a
+                href="#"
+                className="text-zinc-500 hover:text-violet-400 transition-colors"
+              >
+                Launches
+              </a>
+              <a
+                href="#"
+                className="text-zinc-500 hover:text-violet-400 transition-colors"
+              >
+                Roadmap
+              </a>
+              <a
+                href="#"
+                className="text-zinc-500 hover:text-violet-400 transition-colors"
+              >
+                Docs
+              </a>
             </div>
             <div className="flex flex-col gap-2">
-              <span className="text-zinc-400 font-bold tracking-wider uppercase text-[11px]">Legal</span>
-              <a href="#" className="text-zinc-500 hover:text-violet-400 transition-colors">Terms</a>
-              <a href="#" className="text-zinc-500 hover:text-violet-400 transition-colors">Privacy</a>
+              <span className="text-zinc-400 font-bold tracking-wider uppercase text-[11px]">
+                Legal
+              </span>
+              <a
+                href="#"
+                className="text-zinc-500 hover:text-violet-400 transition-colors"
+              >
+                Terms
+              </a>
+              <a
+                href="#"
+                className="text-zinc-500 hover:text-violet-400 transition-colors"
+              >
+                Privacy
+              </a>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <a href="#" className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors">
+            <a
+              href="#"
+              className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors"
+            >
               <Twitter size={16} />
             </a>
-            <a href="#" className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors">
+            <a
+              href="#"
+              className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors"
+            >
               <Send size={16} />
             </a>
-            <a href="https://github.com/Unyime12/raven-launchpad" className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors">
+            <a
+              href="https://github.com/Unyime12/raven-launchpad"
+              className="p-2 rounded-lg bg-white/5 hover:bg-violet-500/20 text-zinc-400 hover:text-violet-400 transition-colors"
+            >
               <Github size={16} />
             </a>
           </div>
