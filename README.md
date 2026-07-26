@@ -153,6 +153,14 @@ The following wallets have interacted with Raven Launchpad contracts on Stellar 
 
 > View all contract activity: [RAVEN Launchpad on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CCHUVB7C4VB4QT7XCFOQFAJI4GTJNZTZE37GQY5H3UK53EYISSEVWUKH)
 
+## User Onboarding & Feedback
+
+New users: submit your wallet address and feedback via the form below.
+
+> **[Fill out the Raven onboarding form →](https://forms.gle/P755KsAWrhKEfpbN8)**
+
+> **Responses:** [CSV](docs/raven-feedback-responses.csv) · [Excel (.xlsx)](docs/raven-feedback-responses.xlsx)
+
 ## Adding a New Launch
 
 There are two ways to launch a new token:
