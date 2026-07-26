@@ -119,8 +119,6 @@ This eliminates the need for users to sign a separate mint approval — the laun
 
 **Funding Token (XLM SAC):** `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
 
-**Live users wallet and tx:** `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` | 
-
 ---
 
 ## Testnet Transactions
@@ -136,6 +134,24 @@ This eliminates the need for users to sign a separate mint approval — the laun
 ---
 
 ## Adding a New Launch
+
+There are two ways to launch a new token:
+
+### Launch via Frontend 
+
+1. Connect your wallet on the **Add Project** page (`/launch/new`)
+2. Fill in token details (name, ticker, soft cap, liquidity %, tokens offered, deadline)
+3. Click through the 4 on-chain steps in order:
+   - Deploy Token Contract
+   - Deploy Launchpad Contract
+   - Initialize Token (admin = launchpad)
+   - Initialize Launchpad
+4. Once all 4 steps succeed, the launch is automatically saved and you're redirected to its live page — no manual file editing required
+
+The frontend deploys new instances from an already-uploaded wasm hash (set via `NEXT_PUBLIC_TOKEN_WASM_HASH` / `NEXT_PUBLIC_LAUNCHPAD_WASM_HASH` env vars), then persists the launch to a small KV store so it appears on the homepage without a redeploy.
+
+### Launch via CLI 
+
 
 Each new project requires deploying a fresh Token + Launchpad pair. The wasm is already uploaded to testnet so you only need to deploy new instances:
 
