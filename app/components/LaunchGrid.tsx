@@ -6,15 +6,21 @@ import LaunchFilters, {
   type FilterStatus,
   type SortKey,
 } from "./LaunchFilters";
-import { Rocket } from "lucide-react";
-import { LAUNCHES } from "../lib/launches";
+import { Loader2 } from "lucide-react";
+import { LAUNCHES as SEED_LAUNCHES } from "../lib/launches";
+
+const PAGE_SIZE = 6;
 
 export default function LaunchGrid() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<FilterStatus>("all");
   const [sort, setSort] = useState<SortKey>("default");
   const [chainStates, setChainStates] = useState<Record<string, number>>({});
-  const [launches, setLaunches] = useState<LaunchMeta[]>([]);
+  const [dynamicLaunches, setDynamicLaunches] = useState<LaunchMeta[]>([]);
+
+  // pagination
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const handleChainState = (id: string, state: number) => {
     setChainStates((prev) =>
@@ -25,11 +31,20 @@ export default function LaunchGrid() {
   useEffect(() => {
     fetch("/api/launches", { cache: "no-store" })
       .then((res) => res.json())
-      .then(setLaunches);
+      .then((data: LaunchMeta[]) => {
+        setDynamicLaunches(Array.isArray(data) ? data : []);
+      })
+      .catch(() => setDynamicLaunches([]));
   }, []);
 
+  // Combine + dedupe by id 
+  const allLaunches = useMemo(() => {
+    if (dynamicLaunches.length > 0) return dynamicLaunches;
+    return SEED_LAUNCHES; // fallback while fetch is in flight or on error
+  }, [dynamicLaunches]);
+
   const filtered = useMemo(() => {
-    let list = [...LAUNCHES];
+    let list = [...allLaunches];
 
     // Search
     if (search.trim()) {
@@ -70,7 +85,23 @@ export default function LaunchGrid() {
     }
 
     return list;
-  }, [search, status, sort, chainStates]);
+  }, [allLaunches, search, status, sort, chainStates]);
+
+ 
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [search, status, sort]);
+
+  const visible = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
+
+  const handleViewAll = () => {
+    setLoadingMore(true);
+    setTimeout(() => {
+      setVisibleCount(filtered.length);
+      setLoadingMore(false);
+    }, 500);
+  };
 
   return (
     <>
@@ -81,10 +112,10 @@ export default function LaunchGrid() {
         onStatus={setStatus}
         sort={sort}
         onSort={setSort}
-        total={LAUNCHES.length}
+        total={allLaunches.length}
       />
 
-      <div className="max-w-5xl mx-auto px-4 pb-24">
+      <div className="max-w-5xl mx-auto px-4 pb-16">
         {filtered.length === 0 ? (
           // Empty state
           <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
@@ -104,13 +135,39 @@ export default function LaunchGrid() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtered.map((launch) => (
+            {visible.map((launch) => (
               <LaunchCardWrapper
                 key={launch.id}
                 launch={launch}
                 onChainState={handleChainState}
               />
             ))}
+          </div>
+        )}
+
+        {/* View All Launches */}
+        {filtered.length > 0 && (
+          <div className="pt-10 flex justify-center">
+            {hasMore ? (
+              <button
+                onClick={handleViewAll}
+                disabled={loadingMore}
+                className="flex items-center gap-2 text-sm font-bold text-zinc-400 
+                  hover:text-violet-400 transition-colors disabled:opacity-60 
+                  disabled:cursor-not-allowed"
+              >
+                {loadingMore ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+       
+                  </>
+                ) : (
+                  `View All Launches`
+                )}
+              </button>
+            ) : (
+    <></>
+            )}
           </div>
         )}
       </div>

@@ -187,29 +187,7 @@ export default function Home() {
       <div className="flex-1">
         <LaunchGrid />
 
-        {/* View All Launches */}
-        <div className="max-w-5xl mx-auto px-4 pb-16 flex justify-center">
-          {!showNoMore ? (
-            <button
-              onClick={handleViewAll}
-              disabled={loadingMore}
-              className="flex items-center gap-2 text-sm font-bold text-zinc-400 
-                hover:text-violet-400 transition-colors disabled:opacity-60 
-                disabled:cursor-not-allowed"
-            >
-              {loadingMore ? (
-                <>
-                  <Loader2 size={16} className="animate-spin" />
-                  Loading...
-                </>
-              ) : (
-                "View All Launches"
-              )}
-            </button>
-          ) : (
-            <p className="text-sm text-zinc-600">No more launches</p>
-          )}
-        </div>
+ 
       </div>
 
       {/* Footer */}

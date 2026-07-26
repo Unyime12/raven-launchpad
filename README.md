@@ -119,6 +119,8 @@ This eliminates the need for users to sign a separate mint approval — the laun
 
 **Funding Token (XLM SAC):** `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
 
+**Live users wallet and tx:** `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` | 
+
 ---
 
 ## Testnet Transactions
