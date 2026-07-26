@@ -133,6 +133,26 @@ This eliminates the need for users to sign a separate mint approval — the laun
 
 ---
 
+## Proof of User Interaction
+
+The following wallets have interacted with Raven Launchpad contracts on Stellar Testnet:
+
+| # | Address | Transaction Hash | View Tx |
+|---|---|---|---|
+| 1 | `GCGI3OXCYBO5JL63XQKJMQA6R5WZYY7XH3FBL2K7TYR7AKDZVPPZNGYC` | `201bf876185907305942da4228212b4ce573e89d98bf8df7eaa158c57b46a6e8` | [View](https://stellar.expert/explorer/testnet/tx/201bf876185907305942da4228212b4ce573e89d98bf8df7eaa158c57b46a6e8) |
+| 2 | `GA5HS2GA4FJGDCEZGGAKNZJCCI6CCVKADS2XJ5663HXBC4SKCKXPTBCT` | `e32d769d954ec498f0b5ce7bbe5f257801ebc6c2bc6b8c136cd48cd3ceec0459` | [View](https://stellar.expert/explorer/testnet/tx/e32d769d954ec498f0b5ce7bbe5f257801ebc6c2bc6b8c136cd48cd3ceec0459) |
+| 3 | `GDGIFF6OQXSCBI4YP47UVJMXMIVK2XHEZRQFMHXGAQJKBYSCONX7T2RA` | `e283f2ce8c724ff4e9d85bebf26b29db0c95fcc4d6a92f810968fe371ab55150` | [View](https://stellar.expert/explorer/testnet/tx/e283f2ce8c724ff4e9d85bebf26b29db0c95fcc4d6a92f810968fe371ab55150) |
+| 4 | `GCPE6I7UYANN6GEGKQMYAB6Z2SHWW4VH6KCZ6S5H2X5ISW6YPGRIX3XJ` | `4c3371d0963c892b8556a9d8864a8f2e86ff48f35ec0e1919032545ac9430663` | [View](https://stellar.expert/explorer/testnet/tx/4c3371d0963c892b8556a9d8864a8f2e86ff48f35ec0e1919032545ac9430663) |
+| 5 | `GAH7GVDG7GWJSMMVJB3ZSMGMEQQGYIA7WC6PRN5RPHNXEIBXOATUH6DU` | `a57146125f4fb01fd66476f9cf419233390677e1093601b648022ac7490a474e` | [View](https://stellar.expert/explorer/testnet/tx/a57146125f4fb01fd66476f9cf419233390677e1093601b648022ac7490a474e) |
+| 6 | `GCJ24FIOJHEVF5N4CL72TGIUYCOCT7RPUME4Z4KJVD4VPA3EZMBYEXC7` | `e6b37c376378f126f371c11564999ac14d98be5970cf9f94ad3d63b7bd2afcad` | [View](https://stellar.expert/explorer/testnet/tx/e6b37c376378f126f371c11564999ac14d98be5970cf9f94ad3d63b7bd2afcad) |
+| 7 | `GCZFAAOPONJZIRDLWGDES3MPDSPDKQPURWFB6UGG4SUH5C2SNFWLU2VD` | `bdf04dbe9fceee8e2a920ec5f962ee7aa01c867965b71f084fe0ed856fdd21b1` | [View](https://stellar.expert/explorer/testnet/tx/bdf04dbe9fceee8e2a920ec5f962ee7aa01c867965b71f084fe0ed856fdd21b1) |
+| 8 | `GCA3VU6QFGA72JVIC7KIX3T7ATWWJIVMBKEIY7EGCNL36P2A4Z4NAMJU` | `3ddc9cfea992abb177ac82146f74ea6d2326b9c4788d03bf893ec33c44ac7c39` | [View](https://stellar.expert/explorer/testnet/tx/3ddc9cfea992abb177ac82146f74ea6d2326b9c4788d03bf893ec33c44ac7c39) |
+| 9 | `GA6V47IENDB2NFPKDEQRYEBPROXS5YBYFDC26CG2J27CI5JA2UQ74KMN` | `23e6d7febf89092b6b11ef91d3c2adb180c4d92823bcbc21d9ebc427a09d273f` | [View](https://stellar.expert/explorer/testnet/tx/23e6d7febf89092b6b11ef91d3c2adb180c4d92823bcbc21d9ebc427a09d273f) |
+| 10 | `GBE73MIWCVUSTIXFODKIDUFBPDKKWIJC7O7AYL7R4FV5SAPQSS7BV2W6` | `a6ca7bc12b6fcc2f5b3fb049639dd487c8354abf74714a825c06c1d772fb6cc4` | [View](https://stellar.expert/explorer/testnet/tx/a6ca7bc12b6fcc2f5b3fb049639dd487c8354abf74714a825c06c1d772fb6cc4) |
+| 11 | `GBJQ4BBZLDEXDVVY7QLF6FXX7QRHDACYYTRSAMTA3JDOING5YA6W6GX4` | `0b0a5f6e2d41811ec268fcfda7a23ca34618cad1094a178cddac3752e1eb91f0` | [View](https://stellar.expert/explorer/testnet/tx/0b0a5f6e2d41811ec268fcfda7a23ca34618cad1094a178cddac3752e1eb91f0) |
+
+> View all contract activity: [RAVEN Launchpad on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CCHUVB7C4VB4QT7XCFOQFAJI4GTJNZTZE37GQY5H3UK53EYISSEVWUKH)
+
 ## Adding a New Launch
 
 There are two ways to launch a new token:
