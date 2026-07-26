@@ -237,28 +237,42 @@ export default function NewLaunchPage() {
 }`;
 
 useEffect(() => {
-    if (!allDone) return;
-  
-    const launchEntry = {
-      id: `launch-${Date.now()}`,
-      name,
-      ticker,
-      launchpadId,
-      tokenId,
-      softCap: Number(softCap),
-      liquidity: Number(liquidity),
-      offered: `${offered} ${ticker}`,
-      icon: icon || "https://api.iconify.design/tabler/fish.svg",
-    };
-  
-    fetch("/api/launches", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(launchEntry),
+  if (!allDone || saveStatus !== "idle") return;
+
+  const newId = `launch-${Date.now()}`;
+  const launchEntry = {
+    id: newId,
+    name,
+    ticker,
+    launchpadId,
+    tokenId,
+    softCap: Number(softCap),
+    liquidity: Number(liquidity),
+    offered: `${offered} ${ticker}`,
+    icon: icon || "https://api.iconify.design/tabler/fish.svg",
+  };
+
+  setSaveStatus("saving");
+  setLaunchId(newId);
+
+  fetch("/api/launches", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(launchEntry),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Save failed");
+      return res.json();
     })
-      .then((res) => res.json())
-      .catch((e) => console.error("Failed to save launch:", e));
-  }, [allDone]);
+    .then(() => {
+      setSaveStatus("saved");
+      setTimeout(() => router.push(`/launch/${newId}`), 1500);
+    })
+    .catch((e) => {
+      console.error("Failed to save launch:", e);
+      setSaveStatus("error");
+    });
+}, [allDone, saveStatus]);
 
   return (
     <div className="min-h-screen bg-[#202025] text-zinc-200 font-mono">
