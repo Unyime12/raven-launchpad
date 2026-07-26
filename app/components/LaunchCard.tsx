@@ -18,6 +18,7 @@ import {
   Package,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import CountdownTimer from "./CountdownTimer";
 
 export interface LaunchMeta {
   id: string; // unique slug, used in the URL: /launch/[id]
@@ -29,6 +30,7 @@ export interface LaunchMeta {
   liquidity: number; // % going to LP (static, set at deploy time)
   offered: string; // e.g. "64 MTK"
   icon?: string | null; // URL to token icon, null = placeholder
+  deadline?: number;
 }
 
 interface ChainState {
@@ -201,17 +203,21 @@ export default function LaunchCard({
           </div>
         </div>
 
-        {/* Status badge */}
-        {chain && !loading ? (
-          <span
-            className={`shrink-0 flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full border tracking-widest ${status.color}`}
-          >
-            {status.icon}
-            {status.label}
-          </span>
-        ) : (
-          <span className="shrink-0 h-6 w-16 rounded-full bg-zinc-800 animate-pulse" />
-        )}
+        <div className="flex flex-col items-end gap-1 shrink-0">
+          {chain && !loading ? (
+            <span
+              className={`flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full border tracking-widest ${status.color}`}
+            >
+              {status.icon}
+              {status.label}
+            </span>
+          ) : (
+            <span className="h-6 w-16 rounded-full bg-zinc-800 animate-pulse" />
+          )}
+          {!loading && (
+            <CountdownTimer deadline={launch.deadline} ended={isEnded} />
+          )}
+        </div>
       </div>
 
       {/* ── Row 2: exchange rate ── */}
@@ -226,10 +232,12 @@ export default function LaunchCard({
           <div className="h-7 w-28 rounded bg-zinc-800 animate-pulse" />
         ) : (
           <>
-         <p className="text-violet-400 text-xl font-black tabular-nums">
-  {Number.isInteger(targetXlm) ? targetXlm : parseFloat(targetXlm).toFixed(2)}{" "}
-  <span className="text-sm font-bold text-zinc-500">XLM</span>
-</p>
+            <p className="text-violet-400 text-xl font-black tabular-nums">
+              {Number.isInteger(targetXlm)
+                ? targetXlm
+                : parseFloat(targetXlm).toFixed(2)}{" "}
+              <span className="text-sm font-bold text-zinc-500">XLM</span>
+            </p>
             <p className="text-[10px] text-zinc-600 uppercase tracking-widest mt-0.5">
               Soft Cap
             </p>
@@ -288,7 +296,6 @@ export default function LaunchCard({
 
       {/* ── Row 6: action row ── */}
       <div className="flex gap-2 pt-1 mt-auto">
- 
         {/* View button */}
         <Link
           href={`/launch/${launch.id}`}

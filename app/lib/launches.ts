@@ -9,6 +9,7 @@ export const LAUNCHES = [
       liquidity: 62.5,
       offered: "23200000 RVN",
       icon: "https://api.dicebear.com/7.x/thumbs/svg?seed=RAVEN&backgroundColor=1a1a2e&shapeColor=7c3aed",
+      deadline: 1798761600,
     },
     {
       id: "launch-2",
@@ -20,6 +21,7 @@ export const LAUNCHES = [
       liquidity: 62.5,
       offered: "567800000 NORM",
       icon: "https://api.dicebear.com/7.x/pixel-art/svg?seed=NORMIES&backgroundColor=1a1a2e&clothing=variant01&accessories=variant01",
+      deadline: 1798761600,
     },
     {
       id: "launch-3",

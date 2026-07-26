@@ -31,6 +31,7 @@ import {
 import { FaWallet } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import { LAUNCHES } from "@/app/lib/launches";
+import CountdownTimer from "@/app/components/CountdownTimer";
 
 const RPC_URL = "https://soroban-testnet.stellar.org:443";
 const PASSPHRASE = Networks.TESTNET;
@@ -140,7 +141,7 @@ export default function LaunchDetailPage() {
   const params = useParams();
   const id = params?.id as string;
 
-  const launch = LAUNCHES.find((l: { id: string }) => l.id === id);
+  const launch: any = LAUNCHES.find((l: { id: string }) => l.id === id);
   if (!launch) return notFound();
 
   const { address: connectedAddress, walletsKit, setAddress } = useWallet();
@@ -475,6 +476,14 @@ export default function LaunchDetailPage() {
                 )}
               </h2>
 
+              {!chainLoading && (
+                <CountdownTimer
+                  deadline={launch.deadline}
+                  ended={state === 1 || state === 2}
+                  size="lg"
+                />
+              )}
+
               {/* Funded / target */}
               {chainLoading ? (
                 <div className="h-8 w-40 rounded bg-zinc-800 animate-pulse" />
@@ -594,9 +603,7 @@ export default function LaunchDetailPage() {
                       <AlertCircle size={15} /> Insufficient Balance
                     </>
                   ) : (
-                    <>
-                      Buy {launch.ticker}
-                    </>
+                    <>Buy {launch.ticker}</>
                   )}
                 </button>
               </motion.div>
@@ -634,7 +641,7 @@ export default function LaunchDetailPage() {
                     </>
                   ) : (
                     <>
-                     Claim {myContrib} {launch.ticker}
+                      Claim {myContrib} {launch.ticker}
                     </>
                   )}
                 </button>
