@@ -6,7 +6,7 @@ A multi-token launchpad (IDO) built on Stellar/Soroban. Contributors fund raises
 
 > [https://raven-launchpad.vercel.app](https://raven-launchpad.vercel.app)
 
-> 🎥 Demo Video: [Watch on YouTube](https://youtu.be/KjZI1uxUs2Y?si=NIVk09Sqj0ErFZl0)
+> 🎥 Demo Video: [Watch on YouTube](https://youtu.be/xSgEDOB3W2Y?si=Q90dnBY11es154u0)
 
 ---
 
@@ -39,6 +39,12 @@ Raven Launchpad uses a simple raise-or-refund model across multiple simultaneous
 Each launch is an independent pair of Token + Launchpad contracts, registered in the frontend registry.
 
 ---
+
+## UX & Reliability
+
+- **Loading states:** Stat cards, progress bars, and balance displays show skeleton placeholders while contract state is being fetched — no blank screens or flash of zero values.
+- **Error handling:** Failed transactions (buy, claim, refund, deploy) surface as dismissible toasts with the actual error message. Action buttons are disabled while a transaction is pending or when the action is invalid (e.g. nothing claimable), preventing duplicate submissions.
+- **Empty & edge states:** When no launches match the current filter, or a wallet has no contributions, the UI shows a clear call-to-action instead of an empty or broken layout. Mobile layout remains usable with adjusted icon sizes and touch targets.
 
 ## Architecture
 
@@ -155,11 +161,35 @@ The following wallets have interacted with Raven Launchpad contracts on Stellar 
 
 ## User Onboarding & Feedback
 
-New users: submit your wallet address and feedback via the form below.
+For New users: submit your wallet address and feedback via the form below.
 
 > **[Fill out the Raven onboarding form →](https://forms.gle/P755KsAWrhKEfpbN8)**
 
-> **Responses:** [CSV](docs/raven-feedback-responses.csv) · [Excel (.xlsx)](docs/raven-feedback-responses.xlsx)
+### Feedback Summary
+**11 responses · Avg 4.4/5**
+
+Users praised the smooth flow, clear UI, and instant deploy. Top requests: contribution history and an “ending soon” filter.
+
+> “Best looking launchpad UI I've tried so far.”
+>
+> **Responses:** [CSV](/raven-feedback-responses.csv) · [Excel (.xlsx)](/raven-feedback-responses.xlsx)
+
+## Monitoring
+
+Raven Launchpad uses:
+
+**1. Umami Analytics (Frontend)**
+- Real-time visitor, visit, and pageview tracking
+- Bounce rate and average visit duration
+- Hourly traffic breakdown
+
+![Umami Analytics Dashboard](app/screenshots/analytics.png)
+
+**2. Stellar Expert (Onchain)**
+- Per-launch contract transaction history
+- Real-time fee and transaction monitoring: [RAVEN Launchpad](https://stellar.expert/explorer/testnet/contract/CCHUVB7C4VB4QT7XCFOQFAJI4GTJNZTZE37GQY5H3UK53EYISSEVWUKH)
+
+![Explorer Screenshot](app/screenshots/onchain-monitoring.png)
 
 ## Adding a New Launch
 
@@ -234,7 +264,6 @@ Then add an entry to `lib/launches.ts`:
 
 ---
 
-## Contract API
 
 ### Launchpad
 
