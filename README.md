@@ -134,7 +134,7 @@ This eliminates the need for users to sign a separate mint approval — the laun
 | | |
 |---|---|
 | **Transaction** | `93af8aab7711c65e7272ef2f7f59ab7232f18e3d780e7e524d3c85c7858080c9` |
-| **Explorer** | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/93af8aab7711c65e7272ef2f7f59ab7232f18e3d780e7e524d3c85c7858080c9) |
+| **Explorer** | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/1885976731401b548936e23632fe634a158fd90ef614b87cf0aad1b5d3ebfe6a) |
 | **Action** | Launchpad calls `token.mint()` via `authorize_as_current_contract` |
 
 ---
@@ -157,7 +157,7 @@ The following wallets have interacted with Raven Launchpad contracts on Stellar 
 | 10 | `GBE73MIWCVUSTIXFODKIDUFBPDKKWIJC7O7AYL7R4FV5SAPQSS7BV2W6` | `a6ca7bc12b6fcc2f5b3fb049639dd487c8354abf74714a825c06c1d772fb6cc4` | [View](https://stellar.expert/explorer/testnet/tx/a6ca7bc12b6fcc2f5b3fb049639dd487c8354abf74714a825c06c1d772fb6cc4) |
 | 11 | `GBJQ4BBZLDEXDVVY7QLF6FXX7QRHDACYYTRSAMTA3JDOING5YA6W6GX4` | `0b0a5f6e2d41811ec268fcfda7a23ca34618cad1094a178cddac3752e1eb91f0` | [View](https://stellar.expert/explorer/testnet/tx/0b0a5f6e2d41811ec268fcfda7a23ca34618cad1094a178cddac3752e1eb91f0) |
 
-> View all contract activity: [RAVEN Launchpad on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CCHUVB7C4VB4QT7XCFOQFAJI4GTJNZTZE37GQY5H3UK53EYISSEVWUKH)
+> View contract activity: [RAVEN Launchpad on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CA5TKDFAZLRL6E4JRHHJ7CBY6BNJFD5AKKKDDWNG4BLI27CAULIQLTXP)
 
 ## User Onboarding & Feedback
 
@@ -187,7 +187,7 @@ Raven Launchpad uses:
 
 **2. Stellar Expert (Onchain)**
 - Per-launch contract transaction history
-- Real-time fee and transaction monitoring: [RAVEN Launchpad](https://stellar.expert/explorer/testnet/contract/CCHUVB7C4VB4QT7XCFOQFAJI4GTJNZTZE37GQY5H3UK53EYISSEVWUKH)
+- Real-time fee and transaction monitoring: [RAVEN Launchpad](https://stellar.expert/explorer/testnet/contract/CA5TKDFAZLRL6E4JRHHJ7CBY6BNJFD5AKKKDDWNG4BLI27CAULIQLTXP)
 
 ![Explorer Screenshot](app/screenshots/onchain-monitoring.png)
 

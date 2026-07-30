@@ -240,7 +240,7 @@ mod tests {
     use super::*;
     use soroban_sdk::{testutils::{Address as _, Ledger}, Env, Address};
 
-    fn create_launchpad(env: &Env) -> (LaunchpadClient, Address, Address) {
+    fn create_launchpad(env: &Env) -> (LaunchpadClient<'_>, Address, Address) {
         let contract_id = env.register_contract(None, Launchpad);
         let client = LaunchpadClient::new(env, &contract_id);
         let token = Address::generate(env);
